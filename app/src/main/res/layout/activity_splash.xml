@@ -8,17 +8,29 @@
     tools:context=".ui.splash.SplashActivity">
 
     <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="32dp"
+        android:contentDescription="@string/img"
+        android:src="@drawable/ngao_web_logo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:srcCompat="@drawable/ngao_web_logo" />
+
+    <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="350dp"
+        android:layout_height="280dp"
         android:contentDescription="@string/img"
         android:scaleType="fitXY"
         android:src="@drawable/sticker_splash"
-        tools:srcCompat="@drawable/sticker_splash"
         app:layout_constraintBottom_toTopOf="@+id/textViewOne"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView2"
+        tools:srcCompat="@drawable/sticker_splash" />
 
     <TextView
         android:id="@+id/textViewOne"
