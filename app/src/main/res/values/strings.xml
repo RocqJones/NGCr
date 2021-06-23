@@ -1,3 +1,33 @@
 <resources>
     <string name="app_name">Ngao</string>
+    <string name="img">img</string>
+    <string name="splash_txt_one">Ngao Credit Limited is a non-deposit taking Microfinance institution founded with the main goal of providing financial services</string>
+    <string name="get_started">Get Started</string>
+    <string name="who_we_are">WHO WE ARE</string>
+    <string name="enter_your_id_number">Please enter your Identification or Passport number to continue</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="identity_number">Identity Number</string>
+    <string name="proceed">Proceed</string>
+    <string name="register">Register?</string>
+    <string name="first_name">First Name</string>
+    <string name="register_here">Register Here!</string>
+    <string name="last_name">Last Name</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="id_number">Id Number</string>
+    <string name="create">Create</string>
+    <string name="phone_no">Phone No</string>
+    <string name="_0_00">0.00</string>
+    <string name="loan_balance_kes">Loan Balance: KES</string>
+    <string name="loan_limit_kes">Loan Limit: KES</string>
+    <string name="request_loan">Request Loan</string>
+    <string name="pay_loan">Pay Loan</string>
+    <string name="advanced_loan">Advanced Loan</string>
+    <string name="finance_services">Finance Services</string>
+    <string name="my_account">My Account</string>
+    <string name="other_activities">Other Activities</string>
+    <string name="asset_finance">Asset Finance</string>
+    <string name="import_finance">Import Finance</string>
+    <string name="mini_statement">Mini Statement</string>
+    <string name="installment_loan">Installment Loan</string>
+    <string name="refer_a_friend">Refer-a-friend</string>
 </resources>
