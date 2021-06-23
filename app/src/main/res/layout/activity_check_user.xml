@@ -48,7 +48,7 @@
         app:layout_constraintTop_toBottomOf="@+id/welcomeTxt" />
 
     <EditText
-        android:id="@+id/identificationNo"
+        android:id="@+id/phoneNo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -57,7 +57,7 @@
         android:autofillHints="no"
         android:fontFamily="@font/font_regular"
         android:hint="@string/identity_number"
-        android:inputType="number"
+        android:inputType="phone"
         android:textColor="@color/black"
         android:textColorHint="@color/web_green"
         android:textSize="16sp"
@@ -80,7 +80,7 @@
         android:textColor="@color/white"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/identificationNo" />
+        app:layout_constraintTop_toBottomOf="@+id/phoneNo" />
 
     <TextView
         android:id="@+id/register"
