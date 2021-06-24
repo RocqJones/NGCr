@@ -10,4 +10,5 @@
     <color name="bg_default">#FFFFFFFF</color>
     <color name="web_orange">#F79428</color>
     <color name="web_green">#007336</color>
+    <color name="link_color">#1791F3</color>
 </resources>
