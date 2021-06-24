@@ -4,9 +4,9 @@
     <string name="splash_txt_one">Ngao Credit Limited is a non-deposit taking Microfinance institution founded with the main goal of providing financial services</string>
     <string name="get_started">Get Started</string>
     <string name="who_we_are">WHO WE ARE</string>
-    <string name="enter_your_id_number">Please enter your Identification or Passport number to continue</string>
+    <string name="enter_your_id_number">Please enter your phone number to continue</string>
     <string name="welcome_back">Welcome Back!</string>
-    <string name="identity_number">Identity Number</string>
+    <string name="identity_number">Phone Number</string>
     <string name="proceed">Proceed</string>
     <string name="register">Register?</string>
     <string name="first_name">First Name</string>
@@ -30,4 +30,8 @@
     <string name="mini_statement">Mini Statement</string>
     <string name="installment_loan">Installment Loan</string>
     <string name="refer_a_friend">Refer-a-friend</string>
+    <string name="ok">OK</string>
+    <string name="getstarted_dialog_txt">Dear customer, to enhance your experience, kindly allow phone permissions</string>
+    <string name="greetings">Greetings,</string>
+    <string name="username">Username</string>
 </resources>
