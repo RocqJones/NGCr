@@ -123,8 +123,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun getPhoneName(): String? {
-        val myDevice = Build.MODEL
-        return myDevice
+        return Build.MODEL
     }
 
     private fun buildClientDetails(animationSource: Int, s: String) {
@@ -143,6 +142,7 @@ class SplashActivity : AppCompatActivity() {
 
         dialog.window!!.attributes.windowAnimations = animationSource
         dialog.show()
+        dialog.setCanceledOnTouchOutside(true)
     }
 
     private fun requestReadPhoneStatePermission() {
@@ -230,7 +230,7 @@ class SplashActivity : AppCompatActivity() {
                     e.printStackTrace()
                 }
                 HttpsURLConnection.setDefaultSSLSocketFactory(
-                    context!!.getSocketFactory()
+                    context!!.socketFactory
                 )
             }
         }
