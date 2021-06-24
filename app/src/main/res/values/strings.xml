@@ -34,4 +34,8 @@
     <string name="getstarted_dialog_txt">Dear customer, to enhance your experience, kindly allow phone permissions</string>
     <string name="greetings">Greetings,</string>
     <string name="username">Username</string>
+    <string name="i_accept_the">I accept the</string>
+    <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
+    <string name="privacy_policy_statement">Privacy Policy Statement</string>
+    <string name="register_dialog_txt"><![CDATA[Dear customer, to proceed you must agree to privacy policy and our terms & conditions]]></string>
 </resources>
