@@ -5,13 +5,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class ViewModelRegister : ViewModel() {
-    private val _webUrlTnC = MutableLiveData<String>().apply {
-        value = "https://www.ngaocredit.com/privacy-policy/"
-    }
 
-    private val _webUrlPolicy = MutableLiveData<String>().apply {
+    private val _webUrl = MutableLiveData<String>().apply {
         value = "https://www.ngaocredit.com/privacy-policy/"
     }
-    val webUrlTnC : LiveData<String> = _webUrlTnC
-    val webUrlPolicy : LiveData<String> = _webUrlPolicy
+    val webUrl : LiveData<String> = _webUrl
+
 }
