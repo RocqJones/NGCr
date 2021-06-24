@@ -255,10 +255,11 @@
         android:orientation="horizontal">
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/getMiniStmt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginEnd="5dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="#DDDBDB"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp">
@@ -267,10 +268,10 @@
                 android:id="@+id/miniStatement"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/font_regular"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:fontFamily="@font/font_regular"
-                android:layout_gravity="center"
                 android:text="@string/mini_statement"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
@@ -281,10 +282,11 @@
         </androidx.cardview.widget.CardView>
 
         <androidx.cardview.widget.CardView
+            android:id="@+id/installmentLoan"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:layout_marginStart="5dp"
+            android:layout_weight="1"
             app:cardBackgroundColor="#DDDBDB"
             app:cardCornerRadius="12dp"
             app:cardElevation="0dp">
@@ -293,10 +295,10 @@
                 android:id="@+id/loanInstallment"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:fontFamily="@font/font_regular"
                 android:paddingTop="8dp"
                 android:paddingBottom="8dp"
-                android:fontFamily="@font/font_regular"
-                android:layout_gravity="center"
                 android:text="@string/installment_loan"
                 android:textAllCaps="true"
                 android:textColor="@color/black"
@@ -319,10 +321,11 @@
         android:textSize="16sp"/>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/referralCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
         android:layout_marginStart="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginEnd="30dp"
         app:cardBackgroundColor="#DDDBDB"
         app:cardCornerRadius="12dp"
@@ -332,16 +335,16 @@
             android:id="@+id/referral"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/refer_a_friend"
-            android:textColor="@color/black"
-            android:fontFamily="@font/font_regular"
-            android:layout_marginTop="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
-            android:textAllCaps="true"
-            android:textSize="14sp"
-            android:gravity="center"
             android:drawablePadding="10dp"
+            android:fontFamily="@font/font_regular"
+            android:gravity="center"
+            android:text="@string/refer_a_friend"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:textSize="14sp"
             app:drawableStartCompat="@drawable/referral" />
 
     </androidx.cardview.widget.CardView>
