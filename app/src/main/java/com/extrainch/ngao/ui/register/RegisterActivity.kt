@@ -69,6 +69,7 @@ class RegisterActivity : AppCompatActivity() {
 
         dialog.window!!.attributes.windowAnimations = animationSource
         dialog.show()
+        dialog.setCanceledOnTouchOutside(true)
     }
 
     private fun browserIntent(url: String) {
