@@ -4,9 +4,11 @@ import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Dialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.os.Handler
 import android.provider.Settings
 import android.telephony.TelephonyManager
 import android.util.Log
@@ -15,9 +17,24 @@ import android.view.WindowManager
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
+import com.android.volley.AuthFailureError
+import com.android.volley.DefaultRetryPolicy
+import com.android.volley.Response
+import com.android.volley.VolleyError
+import com.android.volley.toolbox.JsonObjectRequest
+import com.bumptech.glide.Glide
+import com.extrainch.ngao.MainActivity
 import com.extrainch.ngao.R
 import com.extrainch.ngao.databinding.ActivitySplashBinding
 import com.extrainch.ngao.databinding.DialogAlertBinding
+import com.extrainch.ngao.databinding.DialogCustomizableBinding
+import com.extrainch.ngao.databinding.DialogSuccessBinding
+import com.extrainch.ngao.patterns.MySingleton
+import com.extrainch.ngao.ui.login.LoginActivity
+import com.extrainch.ngao.ui.register.RegisterActivity
+import com.extrainch.ngao.utils.Constants
+import org.json.JSONException
+import org.json.JSONObject
 import java.net.NetworkInterface
 import java.security.KeyManagementException
 import java.security.NoSuchAlgorithmException
@@ -37,6 +54,13 @@ class SplashActivity : AppCompatActivity() {
 
     private val MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0
     // var imeiCode = ""
+
+    var preferences: SharedPreferences? = null
+    var editor: SharedPreferences.Editor? = null
+    var SHARED_PREF_NAME = "ngao_pref"
+
+    var NATIONAL_ID = "NationalID"
+    var NationalID: String? = null
 
     @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -59,7 +83,14 @@ class SplashActivity : AppCompatActivity() {
         // phone name
         getPhoneName()
 
-        Log.d("phone data", "${getDeviceIMEI()}, ${getMacAddress()}, ${getPhoneName()}")
+        // device id. Don't use this it changes = 2de88172-dc13-41b0-ba49-eeaf7c307ba6
+        val deviceId : String = UUID.randomUUID().toString()
+
+        Log.d("phone data", "${getDeviceIMEI()}, ${getMacAddress()}, ${getPhoneName()}, $deviceId")
+
+        // prefs
+        preferences = this.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
+        NationalID = preferences!!.getString(NATIONAL_ID, "NationalID")
 
         binding!!.getStarted.setOnClickListener {
             if (ActivityCompat.checkSelfPermission(
@@ -72,16 +103,123 @@ class SplashActivity : AppCompatActivity() {
                 buildClientDetails(R.style.DialogAnimation_1, "Left - Right Animation!")
             } else {
                 // send data to db
-                val url: String = ""
+                val url: String = Constants.BASE_URL + "MobileClient/ClientDetail"
                 sendDeviceDetails(url)
             }
         }
     }
 
     private fun sendDeviceDetails(url: String) {
-        // the intent will run inside post
-        intentToNext()
+        val jsonObject = JSONObject()
+        try {
+            jsonObject.put("NationalID", "")
+            jsonObject.put("ClientID", "")
+            jsonObject.put("PhoneNumber", "")
+            jsonObject.put("DeviceID", getDeviceIMEI())
+            jsonObject.put("DeviceName", getPhoneName())
+            jsonObject.put("Imei", getDeviceIMEI())
+            jsonObject.put("MacAddress", getMacAddress())
+            Log.d("clientDetails", "$jsonObject")
+        } catch (e: JSONException) {
+            e.printStackTrace()
+        }
         HttpsTrustManager.allowAllSSL()
+
+        val jsonObjectRequest : JsonObjectRequest = object :JsonObjectRequest(Method.POST,
+            url, jsonObject, Response.Listener { response : JSONObject ->
+                try {
+                    Log.d("response", response.toString())
+
+                    val jsnObject = JSONObject(response.toString())
+
+                    if (jsnObject.getString("code").equals("200")) {
+                        val data = JSONObject(jsnObject.getString("data"))
+
+                        // write responses to shared prefs
+                        editor = preferences!!.edit()
+                        editor!!.putString("clientID", data.getString("clientID"))
+                        editor!!.putString("ourBranchID", data.getString("ourBranchID"))
+                        editor!!.putString("phoneNumber", data.getString("phoneNumber"))
+                        editor!!.putString("mbdAccountID", data.getString("mbdAccountID"))
+                        editor!!.putString("name", data.getString("name"))
+                        editor!!.putString("loanAccountID", data.getString("loanAccountID"))
+                        editor!!.putString("accountID", data.getString("accountID"))
+                        editor!!.putString("reminder", data.getString("reminder"))
+                        editor!!.apply()
+
+                        // test access prefs
+                        Log.d("reminder", preferences!!.getString("reminder", "reminder")!!)
+                        popupDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
+                        intentToNext()
+                    } else {
+                        val r = Intent(this, RegisterActivity::class.java)
+                        startActivity(r)
+                        finish()
+                    }
+                } catch (e : Exception) {
+                    e.printStackTrace()
+                }
+            }, Response.ErrorListener { error: VolleyError ->
+                Log.e("conn error", error.toString())
+                // dialog
+                connDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
+            }) {
+            @Throws(AuthFailureError::class)
+            override fun getHeaders(): Map<String, String> {
+                val params: MutableMap<String, String> = HashMap()
+                params["Content-Type"] = "application/json"
+                return params
+            }
+
+            override fun getBodyContentType(): String {
+                return "application/json"
+            }
+        }
+        jsonObjectRequest.retryPolicy = DefaultRetryPolicy(60000,
+            DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+            DefaultRetryPolicy.DEFAULT_BACKOFF_MULT)
+
+        MySingleton.getInstance(this.applicationContext)!!.addToRequestQueue(jsonObjectRequest)
+    }
+
+    private fun popupDialog(dialogAnimation: Int, s: String) {
+        val dialog = Dialog(this)
+        val dBinding: DialogCustomizableBinding = DialogCustomizableBinding.inflate(layoutInflater)
+        val v: View = dBinding.root
+        dialog.setContentView(v)
+        dialog.setCancelable(false)
+
+        dBinding.textOne.text = getString(R.string.successtxt)
+        dBinding.textTwo.text = preferences!!.getString("reminder", "reminder")!!
+
+        dialog.window!!.attributes.windowAnimations = dialogAnimation
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(true)
+
+        // set delay time in milliseconds
+        Handler().postDelayed({
+            val i = Intent(this, LoginActivity::class.java)
+            startActivity(i)
+            finish()
+        }, 2000)
+    }
+
+    private fun connDialog(dialogAnimation1: Int, s: String) {
+        val dialog = Dialog(this)
+        val dBinding: DialogAlertBinding = DialogAlertBinding.inflate(layoutInflater)
+        val v: View = dBinding.root
+        dialog.setContentView(v)
+        dialog.setCancelable(false)
+
+        dBinding.tvResponseId.text = getString(R.string.conn_error)
+
+        dBinding.dialogButtonOK.setOnClickListener{
+            dialog.dismiss()
+        }
+
+        dialog.window!!.attributes.windowAnimations = dialogAnimation1
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(true)
     }
 
     @SuppressLint("HardwareIds")
@@ -181,7 +319,7 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun intentToNext() {
-        val i = Intent(this@SplashActivity, CheckUserActivity::class.java)
+        val i = Intent(this@SplashActivity, RegisterActivity::class.java)
         i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
         startActivity(i)
         finish()
