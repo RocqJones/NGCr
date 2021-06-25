@@ -15,7 +15,7 @@
     <string name="phone_number">Phone Number</string>
     <string name="id_number">Id Number</string>
     <string name="create">Create</string>
-    <string name="phone_no">Phone No</string>
+    <string name="phone_no">* Phone No</string>
     <string name="_0_00">0.00</string>
     <string name="loan_balance_kes">Loan Balance: KES</string>
     <string name="loan_limit_kes">Loan Limit: KES</string>
@@ -38,4 +38,9 @@
     <string name="terms_amp_conditions"><![CDATA[Terms & Conditions]]></string>
     <string name="privacy_policy_statement">Privacy Policy Statement</string>
     <string name="register_dialog_txt"><![CDATA[Dear customer, to proceed you must agree to privacy policy and our terms & conditions]]></string>
+    <string name="invite">Invite</string>
+    <string name="invite_a_friend_onboard">Invite a friend onboard</string>
+    <string name="name">* Name</string>
+    <string name="conn_error">Connection Error! Make sure you are connected to the internet.</string>
+    <string name="successtxt">Successful!</string>
 </resources>
