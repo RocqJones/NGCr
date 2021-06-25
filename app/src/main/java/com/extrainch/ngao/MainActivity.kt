@@ -1,11 +1,13 @@
 package com.extrainch.ngao
 
+import android.content.Intent
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import com.extrainch.ngao.databinding.ActivityMainBinding
+import com.extrainch.ngao.ui.referral.ReferralActivity
 import java.time.Instant
 import java.time.format.DateTimeFormatter
 
@@ -37,6 +39,11 @@ class MainActivity : AppCompatActivity() {
             binding!!.greetings.text = greetings[3]
         } else {
             binding!!.greetings.text = greetings[4]
+        }
+
+        binding!!.referralCard.setOnClickListener {
+            val p = Intent(this@MainActivity, ReferralActivity::class.java)
+            startActivity(p)
         }
     }
 }
