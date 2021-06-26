@@ -115,7 +115,8 @@
                 android:fontFamily="@font/font_regular"
                 android:text="@string/_3"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                style="?android:attr/buttonBarButtonStyle" />
         </LinearLayout>
 
         <LinearLayout
@@ -135,7 +136,8 @@
                 android:fontFamily="@font/font_regular"
                 android:text="@string/_4"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/button_five"
@@ -146,7 +148,8 @@
                 android:fontFamily="@font/font_regular"
                 android:text="@string/_5"
                 android:textColor="@color/black"
-                android:textSize="16sp" />
+                android:textSize="16sp"
+                style="?android:attr/buttonBarButtonStyle" />
 
             <Button
                 android:id="@+id/button_six"
