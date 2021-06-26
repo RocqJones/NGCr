@@ -23,6 +23,7 @@ import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
 import com.extrainch.ngao.R
+import com.extrainch.ngao.adapters.AdapterImageSlider
 import com.extrainch.ngao.databinding.ActivitySplashBinding
 import com.extrainch.ngao.databinding.DialogAlertBinding
 import com.extrainch.ngao.databinding.DialogCustomizableBinding
@@ -30,6 +31,9 @@ import com.extrainch.ngao.patterns.MySingleton
 import com.extrainch.ngao.ui.login.LoginActivity
 import com.extrainch.ngao.ui.register.RegisterActivity
 import com.extrainch.ngao.utils.Constants
+import com.smarteist.autoimageslider.IndicatorView.animation.type.IndicatorAnimationType
+import com.smarteist.autoimageslider.SliderAnimations
+import com.smarteist.autoimageslider.SliderView
 import org.json.JSONException
 import org.json.JSONObject
 import java.net.NetworkInterface
@@ -49,8 +53,11 @@ class SplashActivity : AppCompatActivity() {
 
     private var binding : ActivitySplashBinding? = null
 
+    // slider arr images
+    var images = intArrayOf(R.drawable.sticker_splash, R.drawable.afroa, R.drawable.afrob, R.drawable.afroc)
+    var sliderView: SliderView? = null
+
     private val MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0
-    // var imeiCode = ""
 
     var preferences: SharedPreferences? = null
     var editor: SharedPreferences.Editor? = null
@@ -71,6 +78,14 @@ class SplashActivity : AppCompatActivity() {
             WindowManager.LayoutParams.FLAG_FULLSCREEN
         )
 
+        // prepare slider
+        val adapterImageSlider = AdapterImageSlider(images)
+        sliderView = binding!!.sliderView
+        sliderView!!.setSliderAdapter(adapterImageSlider)
+        sliderView!!.setIndicatorAnimation(IndicatorAnimationType.WORM)
+        sliderView!!.setSliderTransformAnimation(SliderAnimations.DEPTHTRANSFORMATION)
+        sliderView!!.startAutoCycle()
+
         // imei
         getDeviceIMEI()
 
@@ -84,15 +99,15 @@ class SplashActivity : AppCompatActivity() {
         val deviceId : String = UUID.randomUUID().toString()
 
         Log.d("phone data", "${getDeviceIMEI()}, ${getMacAddress()}, ${getPhoneName()}, $deviceId")
-        editor = preferences?.edit()
-        editor?.putString("Imei", getDeviceIMEI().toString())
-        editor?.putString("MacAddress", getMacAddress())
-        editor?.putString("DeviceName", getPhoneName().toString())
-        editor?.putString("DeviceID", getDeviceIMEI().toString())
-        editor?.apply()
-
         // prefs
         preferences = this.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
+        editor = preferences?.edit()
+        editor!!.putString("Imei", getDeviceIMEI().toString())
+        editor!!.putString("MacAddress", getMacAddress())
+        editor!!.putString("DeviceName", getPhoneName().toString())
+        editor!!.putString("DeviceID", getDeviceIMEI().toString())
+        editor!!.apply()
+
         NationalID = preferences!!.getString(NATIONAL_ID, "NationalID")
 
         binding!!.getStarted.setOnClickListener {
@@ -122,7 +137,7 @@ class SplashActivity : AppCompatActivity() {
             jsonObject.put("DeviceName", getPhoneName())
             jsonObject.put("Imei", getDeviceIMEI())
             jsonObject.put("MacAddress", getMacAddress())
-            Log.d("clientDetails", "$jsonObject")
+            Log.d("post clientDetails", "$jsonObject")
         } catch (e: JSONException) {
             e.printStackTrace()
         }
