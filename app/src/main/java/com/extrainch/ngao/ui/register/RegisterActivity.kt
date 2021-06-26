@@ -212,8 +212,7 @@ class RegisterActivity : AppCompatActivity() {
             }, Response.ErrorListener { error: VolleyError ->
                 Log.e("conn error", error.toString())
                 // dialog
-                val msg = getString(R.string.conn_error)
-                warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
+                connDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
             }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -271,8 +270,7 @@ class RegisterActivity : AppCompatActivity() {
             }, Response.ErrorListener { error: VolleyError ->
                 Log.e("conn error", error.toString())
                 // dialog
-                val msg = getString(R.string.conn_error)
-                warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
+                connDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
             }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -354,8 +352,7 @@ class RegisterActivity : AppCompatActivity() {
             }, Response.ErrorListener { error: VolleyError ->
             Log.e("conn error", error.toString())
             // dialog
-            val msg = getString(R.string.conn_error)
-            warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
+             connDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
         }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -425,6 +422,24 @@ class RegisterActivity : AppCompatActivity() {
         }
 
         dialog.window!!.attributes.windowAnimations = animationSource
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(true)
+    }
+
+    private fun connDialog(dialogAnimation1: Int, s: String) {
+        val dialog = Dialog(this)
+        val dBinding: DialogAlertBinding = DialogAlertBinding.inflate(layoutInflater)
+        val v: View = dBinding.root
+        dialog.setContentView(v)
+        dialog.setCancelable(false)
+
+        dBinding.tvResponseId.text = getString(R.string.conn_error)
+
+        dBinding.dialogButtonOK.setOnClickListener{
+            dialog.dismiss()
+        }
+
+        dialog.window!!.attributes.windowAnimations = dialogAnimation1
         dialog.show()
         dialog.setCanceledOnTouchOutside(true)
     }
