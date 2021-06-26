@@ -241,7 +241,7 @@
                 android:textSize="16sp" />
 
             <Button
-                android:id="@+id/txtOk"
+                android:id="@+id/btnOk"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:background="@drawable/loginbtn_style"
