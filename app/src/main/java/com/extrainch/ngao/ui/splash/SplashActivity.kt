@@ -22,13 +22,10 @@ import com.android.volley.DefaultRetryPolicy
 import com.android.volley.Response
 import com.android.volley.VolleyError
 import com.android.volley.toolbox.JsonObjectRequest
-import com.bumptech.glide.Glide
-import com.extrainch.ngao.MainActivity
 import com.extrainch.ngao.R
 import com.extrainch.ngao.databinding.ActivitySplashBinding
 import com.extrainch.ngao.databinding.DialogAlertBinding
 import com.extrainch.ngao.databinding.DialogCustomizableBinding
-import com.extrainch.ngao.databinding.DialogSuccessBinding
 import com.extrainch.ngao.patterns.MySingleton
 import com.extrainch.ngao.ui.login.LoginActivity
 import com.extrainch.ngao.ui.register.RegisterActivity
