@@ -47,7 +47,8 @@ class RegisterActivity : AppCompatActivity() {
     var editor: SharedPreferences.Editor? = null
     var SHARED_PREF_NAME = "ngao_pref"
 
-    lateinit var phoneNo : String
+    var idNumber: String? = null
+    var phoneNo: String? = null
     private lateinit var url : String
     private lateinit var viewModel: ViewModelRegister
 
@@ -83,6 +84,8 @@ class RegisterActivity : AppCompatActivity() {
 
         binding!!.create.setOnClickListener {
             if (binding!!.checkedPrivacyPolicy.isChecked && binding!!.checkedTermsAndC.isChecked) {
+                idNumber = binding!!.idNumber.text.toString().trim()
+                phoneNo = binding!!.phoneNumber.text.toString().trim()
                 // proceed to registration
                 val url: String = Constants.BASE_URL + "Security/ClientRegister"
                 clientRegistration(url)
@@ -140,11 +143,10 @@ class RegisterActivity : AppCompatActivity() {
     private fun clientRegistration(url: String) {
         val jsonObject = JSONObject()
         try {
-            jsonObject.put("NationalID", binding!!.idNumber.toString())
-            jsonObject.put("ClientID", preferences!!.getString("clientID", "clientID")!!)
-            jsonObject.put("PhoneNumber", binding!!.phoneNumber.toString())
+            jsonObject.put("NationalID", idNumber)
+            jsonObject.put("PhoneNumber", phoneNo)
             jsonObject.put("DeviceID", preferences!!.getString("DeviceID", "DeviceID")!!)
-            jsonObject.put("DeviceName", preferences!!.getString("deviceName", "deviceName")!!)
+            jsonObject.put("DeviceName", preferences!!.getString("DeviceName", "DeviceName")!!)
             jsonObject.put("Imei", preferences!!.getString("Imei", "Imei")!!)
             jsonObject.put("MacAddress", preferences!!.getString("MacAddress", "MacAddress")!!)
             Log.d("post clientDetails", "$jsonObject")
@@ -160,11 +162,11 @@ class RegisterActivity : AppCompatActivity() {
                     val jsnObject = JSONObject(response.toString())
 
                     if (jsnObject.getString("code").equals("500")) {
-                        val msg = JSONObject(jsnObject.getString("msg"))
-                        warnDialog(msg.toString())
+                        val msg = JSONObject(jsnObject.getString("msg")).toString()
+                        warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
                     } else if (jsnObject.getString("code").equals("200")){
                         val data = JSONObject(jsnObject.getString("data"))
-                        phoneNo = data.getString(data.getString("phoneNumber"))
+                        val phoneNumber = data.getString(data.getString("phoneNumber"))
 
                         ReceiveSMS().setEditText(binding!!.edtVerificationCode)
 
@@ -172,7 +174,7 @@ class RegisterActivity : AppCompatActivity() {
                         editor!!.putString("NationalID", binding!!.idNumber.toString())
                         editor!!.putString("clientID", data.getString("clientID"))
                         editor!!.putString("ourBranchID", data.getString("ourBranchID"))
-                        editor!!.putString("phoneNumber", phoneNo)
+                        editor!!.putString("phoneNumber", phoneNumber)
                         editor!!.putString("mbdAccountID", data.getString("mbdAccountID"))
                         editor!!.putString("name", data.getString("name"))
                         editor!!.putString("loanAccountID", data.getString("loanAccountID"))
@@ -181,7 +183,11 @@ class RegisterActivity : AppCompatActivity() {
                         editor!!.apply()
 
                         enableDisableFields()
-                        warnDialog(data.getString("remarks"))
+                        warnDialog(
+                            data.getString("remarks").toString(),
+                            R.style.DialogAnimation_1,
+                            "Left - Right Animation!"
+                        )
                     } else {
                         val dialog = Dialog(this)
                         val dBinding: DialogAlertBinding = DialogAlertBinding.inflate(layoutInflater)
@@ -207,7 +213,7 @@ class RegisterActivity : AppCompatActivity() {
                 Log.e("conn error", error.toString())
                 // dialog
                 val msg = getString(R.string.conn_error)
-                warnDialog(msg)
+                warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
             }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -231,8 +237,8 @@ class RegisterActivity : AppCompatActivity() {
         val jsonObject = JSONObject()
         try {
             jsonObject.put("NationalID", preferences!!.getString("idNumber", "idNumber"))
-            jsonObject.put("ClientID", preferences!!.getString("ClientID", "ClientID"))
-            jsonObject.put("PhoneNumber", preferences!!.getString("PhoneNumber", "PhoneNumber"))
+            jsonObject.put("ClientID", preferences!!.getString("clientID", "clientID"))
+            jsonObject.put("PhoneNumber", preferences!!.getString("phoneNumber", "phoneNumber"))
             jsonObject.put("DeviceID", preferences!!.getString("DeviceID", "DeviceID"))
             jsonObject.put("DeviceName", preferences!!.getString("DeviceName", "DeviceName"))
             jsonObject.put("Imei", preferences!!.getString("Imei", "Imei"))
@@ -254,10 +260,9 @@ class RegisterActivity : AppCompatActivity() {
 
                     if (objRes.getString("code").equals("200")) {
                         editor = preferences!!.edit()
-                        editor!!.putString("ClientID", objRes.getString("data"))
+                        editor!!.putString("clientID", objRes.getString("data"))
                         editor!!.apply()
 
-                        //new FetchClientDetails().execute(Constants.LOGIN_URL + "GetClientDetails");
                         updateClientPassword(Constants.BASE_URL + "Security/UpdateClientPassword")
                     }
                 } catch (e : Exception) {
@@ -267,7 +272,7 @@ class RegisterActivity : AppCompatActivity() {
                 Log.e("conn error", error.toString())
                 // dialog
                 val msg = getString(R.string.conn_error)
-                warnDialog(msg)
+                warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
             }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -292,8 +297,8 @@ class RegisterActivity : AppCompatActivity() {
         val jsonObject = JSONObject()
         try {
             jsonObject.put("NationalID", preferences!!.getString("idNumber", "idNumber"))
-            jsonObject.put("ClientID", preferences!!.getString("ClientID", "ClientID"))
-            jsonObject.put("PhoneNumber", preferences!!.getString("PhoneNumber", "PhoneNumber"))
+            jsonObject.put("ClientID", preferences!!.getString("clientID", "clientID"))
+            jsonObject.put("PhoneNumber", preferences!!.getString("phoneNumber", "phoneNumber"))
             jsonObject.put("DeviceID", preferences!!.getString("DeviceID", "DeviceID"))
             jsonObject.put("DeviceName", preferences!!.getString("DeviceName", "DeviceName"))
             jsonObject.put("Imei", preferences!!.getString("Imei", "Imei"))
@@ -337,11 +342,11 @@ class RegisterActivity : AppCompatActivity() {
                         finish()
                     } else if (objRes.getString("code").equals("500")) {
                         enableDisableFields()
-                        val msg = JSONObject(objRes.getString("msg"))
-                        warnDialog(msg.toString())
+                        val msg = JSONObject(objRes.getString("msg")).toString()
+                        warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
                     } else {
-                        val msg = JSONObject(objRes.getString("msg"))
-                        warnDialog(msg.toString())
+                        val msg = JSONObject(objRes.getString("msg")).toString()
+                        warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
                     }
                 } catch (e : Exception) {
                     e.printStackTrace()
@@ -350,7 +355,7 @@ class RegisterActivity : AppCompatActivity() {
             Log.e("conn error", error.toString())
             // dialog
             val msg = getString(R.string.conn_error)
-            warnDialog(msg)
+            warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
         }) {
             @Throws(AuthFailureError::class)
             override fun getHeaders(): Map<String, String> {
@@ -387,7 +392,7 @@ class RegisterActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun warnDialog(msg: String) {
+    private fun warnDialog(msg: String, dialoganimation1: Int, s: String) {
         val dialog = Dialog(this)
         val dBinding: DialogAlertBinding = DialogAlertBinding.inflate(layoutInflater)
         val v: View = dBinding.root
@@ -400,7 +405,7 @@ class RegisterActivity : AppCompatActivity() {
             dialog.dismiss()
         }
 
-        dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation_1
+        dialog.window!!.attributes.windowAnimations = dialoganimation1
         dialog.show()
         dialog.setCanceledOnTouchOutside(true)
     }
