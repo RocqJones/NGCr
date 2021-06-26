@@ -84,6 +84,12 @@ class SplashActivity : AppCompatActivity() {
         val deviceId : String = UUID.randomUUID().toString()
 
         Log.d("phone data", "${getDeviceIMEI()}, ${getMacAddress()}, ${getPhoneName()}, $deviceId")
+        editor = preferences!!.edit()
+        editor!!.putString("deviceImei", getDeviceIMEI().toString())
+        editor!!.putString("deviceMac", getMacAddress())
+        editor!!.putString("deviceName", getPhoneName().toString())
+        editor!!.putString("deviceId", deviceId)
+        editor!!.apply()
 
         // prefs
         preferences = this.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
