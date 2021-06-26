@@ -67,5 +67,6 @@ dependencies {
     //
     implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
-    // SliderView
+    // auto-images
+    implementation 'com.github.smarteist:autoimageslider:1.4.0'
 }
