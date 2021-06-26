@@ -8,7 +8,6 @@ import android.content.SharedPreferences
 import android.provider.Telephony
 import android.telephony.SmsMessage
 import android.widget.EditText
-import androidx.appcompat.app.AppCompatActivity
 
 class ReceiveSMS : BroadcastReceiver() {
     var preferences: SharedPreferences? = null
@@ -27,10 +26,10 @@ class ReceiveSMS : BroadcastReceiver() {
         for (sms in messages) {
             val sms_from = messages[0]!!.displayOriginatingAddress
             if (sms_from.equals(SMS_SENDER, ignoreCase = true)) {
-                val bodyText = StringBuilder()
+                StringBuilder()
                 val msg = sms!!.messageBody
-                // here we are spliting the sms using " : " symbol
-                // String otp = msg.split(": ")[1];
+
+                // here we are splitting the sms using " : " symbol
                 if (msg.contains("<#>")) {
                     val first6char = msg.substring(0, 7)
                     val first4char = first6char.replace("<#>", "")
