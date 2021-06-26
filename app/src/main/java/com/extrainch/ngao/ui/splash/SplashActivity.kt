@@ -84,12 +84,12 @@ class SplashActivity : AppCompatActivity() {
         val deviceId : String = UUID.randomUUID().toString()
 
         Log.d("phone data", "${getDeviceIMEI()}, ${getMacAddress()}, ${getPhoneName()}, $deviceId")
-        editor = preferences!!.edit()
-        editor!!.putString("deviceImei", getDeviceIMEI().toString())
-        editor!!.putString("deviceMac", getMacAddress())
-        editor!!.putString("deviceName", getPhoneName().toString())
-        editor!!.putString("deviceId", deviceId)
-        editor!!.apply()
+        editor = preferences?.edit()
+        editor?.putString("Imei", getDeviceIMEI().toString())
+        editor?.putString("MacAddress", getMacAddress())
+        editor?.putString("DeviceName", getPhoneName().toString())
+        editor?.putString("DeviceID", getDeviceIMEI().toString())
+        editor?.apply()
 
         // prefs
         preferences = this.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
@@ -139,7 +139,7 @@ class SplashActivity : AppCompatActivity() {
                         val data = JSONObject(jsnObject.getString("data"))
 
                         // write responses to shared prefs
-                        editor = preferences!!.edit()
+                        editor = preferences?.edit()
                         editor!!.putString("clientID", data.getString("clientID"))
                         editor!!.putString("ourBranchID", data.getString("ourBranchID"))
                         editor!!.putString("phoneNumber", data.getString("phoneNumber"))
@@ -153,7 +153,6 @@ class SplashActivity : AppCompatActivity() {
                         // test access prefs
                         Log.d("reminder", preferences!!.getString("reminder", "reminder")!!)
                         popupDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
-                        intentToNext()
                     } else {
                         val r = Intent(this, RegisterActivity::class.java)
                         startActivity(r)
@@ -319,13 +318,6 @@ class SplashActivity : AppCompatActivity() {
         } else {
             buildClientDetails(R.style.DialogAnimation_1, "Left - Right Animation!")
         }
-    }
-
-    private fun intentToNext() {
-        val i = Intent(this@SplashActivity, RegisterActivity::class.java)
-        i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-        startActivity(i)
-        finish()
     }
 
     class HttpsTrustManager : X509TrustManager {
