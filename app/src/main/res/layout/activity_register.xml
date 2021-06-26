@@ -11,6 +11,7 @@
         android:id="@+id/backBtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
         android:background="@drawable/baseline_back_24dp"
@@ -29,172 +30,288 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/backBtn" />
 
-    <TextView
-        android:id="@+id/heading"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:fontFamily="@font/font_bold"
-        android:text="@string/register_here"
-        android:textColor="@color/black"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/logo"/>
-
     <LinearLayout
-        android:id="@+id/three"
+        android:id="@+id/holder"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_edittext"
         android:orientation="vertical"
-        android:layout_margin="20dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/heading">
+        app:layout_constraintTop_toBottomOf="@+id/logo">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/font_bold"
-            android:text="@string/phone_no"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:paddingRight="5dp"
-            android:layout_marginStart="40dp"
-            android:paddingLeft="5dp"/>
-
-        <EditText
-            android:id="@+id/phoneNumber"
+        <LinearLayout
+            android:id="@+id/firstView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/font_regular"
-            android:hint="@string/phone_number"
-            android:inputType="phone"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:background="@android:color/transparent"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
-            android:autofillHints="phone" />
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="gone">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/heading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/font_bold"
+                android:text="@string/register_here"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-    <LinearLayout
-        android:id="@+id/four"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:background="@drawable/custom_edittext"
-        android:orientation="vertical"
-        android:layout_margin="20dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/three">
+            <LinearLayout
+                android:id="@+id/three"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_edittext"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/heading">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:fontFamily="@font/font_bold"
-            android:text="@string/id_number"
-            android:textSize="12sp"
-            android:textColor="@color/black"
-            android:paddingRight="5dp"
-            android:layout_marginStart="40dp"
-            android:paddingLeft="5dp"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:fontFamily="@font/font_bold"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/phone_no"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
 
-        <EditText
-            android:id="@+id/idNumber"
+                <EditText
+                    android:id="@+id/phoneNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints="phone"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/font_regular"
+                    android:hint="@string/phone_number"
+                    android:inputType="phone"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/four"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="20dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:background="@drawable/custom_edittext"
+                android:orientation="vertical"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/three">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:fontFamily="@font/font_bold"
+                    android:paddingLeft="5dp"
+                    android:paddingRight="5dp"
+                    android:text="@string/id_number"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <EditText
+                    android:id="@+id/idNumber"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="40dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:autofillHints="id number"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="@font/font_regular"
+                    android:hint="@string/id_number"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/tnc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="start"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/four">
+
+                <CheckBox
+                    android:id="@+id/checkedTermsAndC"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/web_orange"
+                    android:fontFamily="@font/font_regular"
+                    android:text="@string/i_accept_the"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/termsAndConditionsStmt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:autoLink="web"
+                    android:fontFamily="@font/font_bold"
+                    android:text="@string/terms_amp_conditions"
+                    android:textColor="@color/link_color"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pvc"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:gravity="start"
+                android:orientation="horizontal"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tnc">
+
+                <CheckBox
+                    android:id="@+id/checkedPrivacyPolicy"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="@color/web_orange"
+                    android:fontFamily="@font/font_regular"
+                    android:text="@string/i_accept_the"
+                    android:textColor="@color/black"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/privacyPolicyStmt"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:autoLink="web"
+                    android:fontFamily="@font/font_bold"
+                    android:text="@string/privacy_policy_statement"
+                    android:textColor="@color/link_color"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/secondView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:fontFamily="@font/font_regular"
-            android:hint="@string/id_number"
-            android:inputType="number"
-            android:textColor="@color/black"
-            android:textSize="16sp"
-            android:background="@android:color/transparent"
-            android:layout_marginStart="40dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginBottom="15dp"
-            android:autofillHints="id number" />
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:visibility="visible"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/logo">
 
-    </LinearLayout>
+            <TextView
+                android:id="@+id/heading2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/font_bold"
+                android:gravity="center"
+                android:text="@string/please_wait_for_the_verification_code_sent_to_your_phone_number"
+                android:textColor="@color/black"
+                android:textSize="16sp" />
 
-    <LinearLayout
-        android:id="@+id/tnc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:gravity="start"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/four">
+            <TextView
+                android:id="@+id/tv_timer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:fontFamily="@font/font_regular"
+                android:textColor="@color/web_green" />
 
-        <CheckBox
-            android:id="@+id/checkedTermsAndC"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/web_orange"
-            android:fontFamily="@font/font_regular"
-            android:text="@string/i_accept_the"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/tv_txt_details"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_gravity="center_horizontal|center_vertical"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_bold"
+                android:gravity="center_vertical|center_horizontal"
+                android:textColor="@color/black"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/termsAndConditionsStmt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/terms_amp_conditions"
-            android:fontFamily="@font/font_bold"
-            android:textColor="@color/link_color"
-            android:autoLink="web"
-            android:textSize="14sp"/>
+            <com.extrainch.ngao.utils.OtpEditText
+                android:id="@+id/edt_verificationCode"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_marginTop="10dp"
+                android:cursorVisible="false"
+                android:digits="1234567890"
+                android:fontFamily="@font/font_bold"
+                android:inputType="number"
+                android:maxLength="4"
+                android:textIsSelectable="false"
+                android:textSize="20sp" />
 
-    </LinearLayout>
+            <EditText
+                android:id="@+id/edt_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints="no"
+                android:drawableStart="@drawable/baseline_perm_identity_black_18dp"
+                android:drawablePadding="16dp"
+                android:fontFamily="@font/font_regular"
+                android:hint="@string/enter_password"
+                android:inputType="numberPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/web_green"
+                android:textSize="16sp" />
 
-    <LinearLayout
-        android:id="@+id/pvc"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="16dp"
-        android:orientation="horizontal"
-        android:gravity="start"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tnc">
+            <EditText
+                android:id="@+id/edt_confirmPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:autofillHints="no"
+                android:drawableStart="@drawable/baseline_perm_identity_black_18dp"
+                android:drawablePadding="16dp"
+                android:fontFamily="@font/font_regular"
+                android:hint="@string/confirm_password"
+                android:inputType="numberPassword"
+                android:textColor="@color/black"
+                android:textColorHint="@color/web_green"
+                android:textSize="16sp" />
 
-        <CheckBox
-            android:id="@+id/checkedPrivacyPolicy"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:buttonTint="@color/web_orange"
-            android:fontFamily="@font/font_regular"
-            android:text="@string/i_accept_the"
-            android:textColor="@color/black"
-            android:textSize="14sp" />
-
-        <TextView
-            android:id="@+id/privacyPolicyStmt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="2dp"
-            android:text="@string/privacy_policy_statement"
-            android:fontFamily="@font/font_bold"
-            android:textColor="@color/link_color"
-            android:autoLink="web"
-            android:textSize="14sp"/>
+        </LinearLayout>
 
     </LinearLayout>
 
@@ -209,9 +326,7 @@
         android:fontFamily="@font/font_bold"
         android:text="@string/create"
         android:textColor="@color/white"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pvc" />
+        app:layout_constraintTop_toBottomOf="@+id/holder"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
