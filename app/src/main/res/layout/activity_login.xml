@@ -217,7 +217,7 @@
 
 
             <Button
-                android:id="@+id/imgCancel"
+                android:id="@+id/btnCancel"
                 style="?android:attr/buttonBarButtonStyle"
                 android:layout_width="70dp"
                 android:layout_height="70dp"
