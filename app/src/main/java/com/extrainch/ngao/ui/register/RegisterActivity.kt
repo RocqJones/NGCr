@@ -29,6 +29,7 @@ import com.android.volley.toolbox.JsonObjectRequest
 import com.extrainch.ngao.R
 import com.extrainch.ngao.databinding.ActivityRegisterBinding
 import com.extrainch.ngao.databinding.DialogAlertBinding
+import com.extrainch.ngao.databinding.DialogCustomizableBinding
 import com.extrainch.ngao.patterns.MySingleton
 import com.extrainch.ngao.service.ReceiveSMS
 import com.extrainch.ngao.ui.login.LoginActivity
@@ -51,6 +52,11 @@ class RegisterActivity : AppCompatActivity() {
     var phoneNo: String? = null
     private lateinit var url : String
     private lateinit var viewModel: ViewModelRegister
+
+    var message: String? = null
+
+    var uCode: String? = null
+    var uPassword: String? = null
 
     private val MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 0
 
@@ -162,32 +168,25 @@ class RegisterActivity : AppCompatActivity() {
                     val jsnObject = JSONObject(response.toString())
 
                     if (jsnObject.getString("code").equals("500")) {
-                        val msg = JSONObject(jsnObject.getString("msg")).toString()
-                        warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
+                        message = jsnObject.getString("msg").toString()
+                        warnDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
                     } else if (jsnObject.getString("code").equals("200")){
                         val data = JSONObject(jsnObject.getString("data"))
-                        val phoneNumber = data.getString(data.getString("phoneNumber"))
+                        Log.d("response 2", data.getString("remarks"))
+                        message = data.getString("remarks").toString()!!
 
-                        ReceiveSMS().setEditText(binding!!.edtVerificationCode)
+                        successTwoHunid(R.style.DialogAnimation_1, "Left - Right Animation!")
+                        //ReceiveSMS().setEditText(binding!!.edtVerificationCode)
 
                         editor = preferences!!.edit()
                         editor!!.putString("NationalID", binding!!.idNumber.toString())
                         editor!!.putString("clientID", data.getString("clientID"))
-                        editor!!.putString("ourBranchID", data.getString("ourBranchID"))
-                        editor!!.putString("phoneNumber", phoneNumber)
-                        editor!!.putString("mbdAccountID", data.getString("mbdAccountID"))
-                        editor!!.putString("name", data.getString("name"))
-                        editor!!.putString("loanAccountID", data.getString("loanAccountID"))
-                        editor!!.putString("accountID", data.getString("accountID"))
-                        editor!!.putString("reminder", data.getString("reminder"))
+                        editor!!.putString("phoneNumber", phoneNo)
                         editor!!.apply()
 
-                        enableDisableFields()
-                        warnDialog(
-                            data.getString("remarks").toString(),
-                            R.style.DialogAnimation_1,
-                            "Left - Right Animation!"
-                        )
+                        binding!!.confirm.setOnClickListener {
+                            verifyCode(Constants.BASE_URL + "Security/ClientVerifyCode")
+                        }
                     } else {
                         val dialog = Dialog(this)
                         val dBinding: DialogAlertBinding = DialogAlertBinding.inflate(layoutInflater)
@@ -199,7 +198,7 @@ class RegisterActivity : AppCompatActivity() {
 
                         dBinding.dialogButtonOK.setOnClickListener{
                             dialog.dismiss()
-                            verifyCode("https://192.168.1.11:8090/SupremeApp/api/Security/ClientVerifyCode")
+                            popupDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
                         }
 
                         dialog.window!!.attributes.windowAnimations = R.style.DialogAnimation_1
@@ -232,18 +231,64 @@ class RegisterActivity : AppCompatActivity() {
         MySingleton.getInstance(this.applicationContext)!!.addToRequestQueue(jsonObjectRequest)
     }
 
+    private fun successTwoHunid(dialogAnimation: Int, s: String) {
+        val dialog = Dialog(this)
+        val dBinding: DialogCustomizableBinding = DialogCustomizableBinding.inflate(layoutInflater)
+        val v: View = dBinding.root
+        dialog.setContentView(v)
+        dialog.setCancelable(false)
+
+        dBinding.textOne.text = getString(R.string.successtxt)
+        dBinding.textTwo.text = message
+
+        dialog.window!!.attributes.windowAnimations = dialogAnimation
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(true)
+
+        dBinding.dialogButtonOK.setOnClickListener {
+            binding!!.secondView.visibility = View.VISIBLE
+            dialog.dismiss()
+            binding!!.firstView.visibility = View.GONE
+        }
+    }
+
+    private fun popupDialog(dialogAnimation1: Int, s: String) {
+        val dialog = Dialog(this)
+        val dBinding: DialogCustomizableBinding = DialogCustomizableBinding.inflate(layoutInflater)
+        val v: View = dBinding.root
+        dialog.setContentView(v)
+        dialog.setCancelable(false)
+
+        dBinding.textOne.text = getString(R.string.successtxt)
+        dBinding.textTwo.text = message
+
+        dBinding.dialogButtonOK.setOnClickListener{
+            dialog.dismiss()
+        }
+
+        dialog.window!!.attributes.windowAnimations = dialogAnimation1
+        dialog.show()
+        dialog.setCanceledOnTouchOutside(true)
+    }
+
     private fun verifyCode(s: String) {
+        val vCode = binding!!.edtVerificationCode.text.toString().trim()
+        val pass = binding!!.edtPassword.text.toString().trim()
+
+        uCode = vCode
+        uPassword = pass
+
         val jsonObject = JSONObject()
         try {
-            jsonObject.put("NationalID", preferences!!.getString("idNumber", "idNumber"))
+            jsonObject.put("DeviceID", preferences!!.getString("DeviceID", "DeviceID"))
             jsonObject.put("ClientID", preferences!!.getString("clientID", "clientID"))
             jsonObject.put("PhoneNumber", preferences!!.getString("phoneNumber", "phoneNumber"))
-            jsonObject.put("DeviceID", preferences!!.getString("DeviceID", "DeviceID"))
+            jsonObject.put("NationalID", idNumber)
             jsonObject.put("DeviceName", preferences!!.getString("DeviceName", "DeviceName"))
             jsonObject.put("Imei", preferences!!.getString("Imei", "Imei"))
             jsonObject.put("MacAddress", preferences!!.getString("MacAddress", "MacAddress"))
-            jsonObject.put("VerificationCode", binding!!.edtVerificationCode)
-            jsonObject.put("Password", binding!!.edtPassword.toString())
+            jsonObject.put("VerificationCode", vCode)
+            jsonObject.put("Password", pass)
 
             Log.d("post verify", "$jsonObject")
         } catch (e: JSONException) {
@@ -260,9 +305,17 @@ class RegisterActivity : AppCompatActivity() {
                     if (objRes.getString("code").equals("200")) {
                         editor = preferences!!.edit()
                         editor!!.putString("clientID", objRes.getString("data"))
+                        editor!!.putString("idNumber", idNumber)
                         editor!!.apply()
 
                         updateClientPassword(Constants.BASE_URL + "Security/UpdateClientPassword")
+                    } else if(objRes.getString("code").equals("500")) {
+                        enableDisableFields()
+                        message = objRes.getString("msg")
+                        warnDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
+                    } else {
+                        message = objRes.getString("msg")
+                        warnDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
                     }
                 } catch (e : Exception) {
                     e.printStackTrace()
@@ -301,8 +354,8 @@ class RegisterActivity : AppCompatActivity() {
             jsonObject.put("DeviceName", preferences!!.getString("DeviceName", "DeviceName"))
             jsonObject.put("Imei", preferences!!.getString("Imei", "Imei"))
             jsonObject.put("MacAddress", preferences!!.getString("MacAddress", "MacAddress"))
-            jsonObject.put("VerificationCode", binding!!.edtVerificationCode)
-            jsonObject.put("Password", binding!!.edtPassword.toString())
+            jsonObject.put("VerificationCode", uCode)
+            jsonObject.put("Password", uPassword)
             Log.d("post update pass", "$jsonObject")
         } catch (e: JSONException) {
             e.printStackTrace()
@@ -340,11 +393,11 @@ class RegisterActivity : AppCompatActivity() {
                         finish()
                     } else if (objRes.getString("code").equals("500")) {
                         enableDisableFields()
-                        val msg = JSONObject(objRes.getString("msg")).toString()
-                        warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
+                        message = JSONObject(objRes.getString("msg")).toString()
+                        warnDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
                     } else {
-                        val msg = JSONObject(objRes.getString("msg")).toString()
-                        warnDialog(msg, R.style.DialogAnimation_1, "Left - Right Animation!")
+                        message = JSONObject(objRes.getString("msg")).toString()
+                        warnDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
                     }
                 } catch (e : Exception) {
                     e.printStackTrace()
@@ -389,14 +442,14 @@ class RegisterActivity : AppCompatActivity() {
         }.start()
     }
 
-    private fun warnDialog(msg: String, dialoganimation1: Int, s: String) {
+    private fun warnDialog(dialoganimation1: Int, s: String) {
         val dialog = Dialog(this)
         val dBinding: DialogAlertBinding = DialogAlertBinding.inflate(layoutInflater)
         val v: View = dBinding.root
         dialog.setContentView(v)
         dialog.setCancelable(false)
 
-        dBinding.tvResponseId.text = msg
+        dBinding.tvResponseId.text = message
 
         dBinding.dialogButtonOK.setOnClickListener{
             dialog.dismiss()
