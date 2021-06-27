@@ -132,7 +132,7 @@ class ReferralActivity : AppCompatActivity() {
         dialog.setContentView(v)
         dialog.setCancelable(false)
 
-        dBinding.tvResponseId.text = getString(R.string.wrong_pin)
+        dBinding.tvResponseId.text = getString(R.string.something_went_wrong)
 
         dBinding.dialogButtonOK.setOnClickListener{
             dialog.dismiss()
