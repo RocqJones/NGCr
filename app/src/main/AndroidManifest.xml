@@ -16,9 +16,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Ngao">
+        <activity android:name=".ui.installment.InstallmentLoanActivity"></activity>
         <activity
             android:name=".ui.referral.ReferralActivity"
-            android:theme="@style/Theme.Design.NoActionBar"/>
+            android:theme="@style/Theme.Design.NoActionBar" />
         <activity
             android:name=".ui.loanadvanced.AdvancedLoanActivity"
             android:theme="@style/Theme.Design.NoActionBar" />
