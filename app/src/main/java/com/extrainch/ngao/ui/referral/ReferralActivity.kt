@@ -49,7 +49,7 @@ class ReferralActivity : AppCompatActivity() {
 
         preferences = this.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
         token = preferences!!.getString(TOKEN, "token")
-        name = preferences!!.getString(NAME, "name")
+        name = preferences!!.getString("name", "name")
         phoneNo = preferences!!.getString(PHONENUMBER, "phoneNumber")
 
         binding!!.backBtn.setOnClickListener {
@@ -88,7 +88,7 @@ class ReferralActivity : AppCompatActivity() {
                 Method.POST,
                 url, jsonObject, Response.Listener { response : JSONObject ->
                     try {
-                        Log.d("response", response.toString())
+                        Log.d("response ", response.toString())
 
                         val objectData = JSONObject(response.toString())
                         if (objectData.getString("code").equals("200")) {
@@ -109,7 +109,7 @@ class ReferralActivity : AppCompatActivity() {
                 override fun getHeaders(): Map<String, String> {
                     val params: MutableMap<String, String> = HashMap()
                     params["Content-Type"] = "application/json"
-                    params["Authorization"] = "Bearer $token"
+                    //params["Authorization"] = "Bearer $token"
                     return params
                 }
 
