@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
     var password: String? = null
 
-    var NATIONAL_ID = "NationalID"
+    var NATIONAL_ID = "idNumber"
     var nationalid: String? = null
 
     var PHONENUMBER = "phoneNumber"
@@ -56,7 +56,7 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding!!.root)
 
         preferences = this.getSharedPreferences(SHARED_PREF_NAME, MODE_PRIVATE)
-        nationalid = preferences!!.getString(NATIONAL_ID, "NationalID")
+        nationalid = preferences!!.getString(NATIONAL_ID, "idNumber")
         phonenumber = preferences!!.getString(PHONENUMBER, "phoneNumber")
         deviceid = preferences!!.getString(DEVICEID, "DeviceID")
         imei = preferences!!.getString(IMEI, "Imei")
@@ -127,11 +127,10 @@ class LoginActivity : AppCompatActivity() {
         val jsonObject = JSONObject()
 
         try {
-            jsonObject.put("NationalID", nationalid)
-            jsonObject.put("PhoneNumber", phonenumber)
             jsonObject.put("DeviceID", deviceid)
             jsonObject.put("DeviceName", devicename)
             jsonObject.put("Imei", imei)
+            jsonObject.put("PhoneNumber", phonenumber)
             jsonObject.put("MacAddress", macaddress)
             jsonObject.put("Password", password)
             Log.d("post login", "$jsonObject")
