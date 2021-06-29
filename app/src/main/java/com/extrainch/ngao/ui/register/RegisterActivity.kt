@@ -31,7 +31,6 @@ import com.extrainch.ngao.databinding.ActivityRegisterBinding
 import com.extrainch.ngao.databinding.DialogAlertBinding
 import com.extrainch.ngao.databinding.DialogCustomizableBinding
 import com.extrainch.ngao.patterns.MySingleton
-import com.extrainch.ngao.service.ReceiveSMS
 import com.extrainch.ngao.ui.login.LoginActivity
 import com.extrainch.ngao.ui.register.viewmodel.ViewModelRegister
 import com.extrainch.ngao.ui.splash.CheckUserActivity
