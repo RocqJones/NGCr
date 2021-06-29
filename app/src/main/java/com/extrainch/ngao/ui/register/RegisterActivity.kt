@@ -170,6 +170,12 @@ class RegisterActivity : AppCompatActivity() {
                     if (jsnObject.getString("code").equals("500")) {
                         message = jsnObject.getString("msg").toString()
                         warnDialog(R.style.DialogAnimation_1, "Left - Right Animation!")
+//                        editor = preferences!!.edit()
+//                        editor!!.putString("phoneNumber", phoneNo)
+//                        editor!!.apply()
+//                        val toLogin = Intent(this, LoginActivity::class.java)
+//                        toLogin.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                        startActivity(toLogin)
                     } else if (jsnObject.getString("code").equals("200")){
                         val data = JSONObject(jsnObject.getString("data"))
                         Log.d("response 2", data.getString("remarks"))
