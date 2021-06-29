@@ -179,7 +179,7 @@ class RegisterActivity : AppCompatActivity() {
                     } else if (jsnObject.getString("code").equals("200")){
                         val data = JSONObject(jsnObject.getString("data"))
                         Log.d("response 2", data.getString("remarks"))
-                        message = data.getString("remarks").toString()!!
+                        message = data.getString("remarks").toString()
 
                         successTwoHunid(R.style.DialogAnimation_1, "Left - Right Animation!")
                         //ReceiveSMS().setEditText(binding!!.edtVerificationCode)
