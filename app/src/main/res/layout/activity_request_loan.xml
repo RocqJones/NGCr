@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@color/bg_default"
+    android:orientation="vertical"
+    tools:context=".ui.loanrequest.RequestLoanActivity">
+
+    <TextView
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:gravity="center"
+        android:fontFamily="@font/font_bold"
+        android:text="Apply Loan"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="20sp" />
+
+    <TextView
+        android:id="@+id/loanLimit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:fontFamily="@font/font_bold"
+        android:gravity="center"
+        android:hint="@string/loan_limit"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/loanAmount"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="no"
+        android:fontFamily="@font/font_regular"
+        android:hint="@string/loan_amount"
+        android:inputType="number"
+        android:textColor="@color/black"
+        android:textColorHint="@color/web_green"
+        android:textSize="16sp" />
+
+    <EditText
+        android:id="@+id/et_loan_term"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_gravity="end"
+        android:fontFamily="@font/font_regular"
+        android:gravity="center_vertical"
+        android:inputType="phone"
+        android:paddingStart="10dp"
+        android:textSize="16sp"
+        android:visibility="gone" />
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:elevation="1dp"
+        android:innerRadius="0dp"
+        android:shape="ring"
+        android:background="@color/bg_default"
+        app:cardBackgroundColor="@color/bg_default"
+
+        app:cardCornerRadius="20dp">
+
+        <RadioGroup
+            android:id="@+id/rd_radiogroup"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|center_horizontal"
+            android:gravity="center_horizontal|center_vertical"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rd_self"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_regular"
+                android:background="@color/web_green"
+                android:text="1 Month"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/rd_guaranteed"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:fontFamily="@font/font_regular"
+                android:background="@color/web_green"
+                android:text="2 Months"
+                android:textSize="10sp" />
+
+            <RadioButton
+                android:id="@+id/rd_collateral"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/web_green"
+                android:fontFamily="@font/font_regular"
+                android:text="3 Months"
+                android:textSize="10sp" />
+        </RadioGroup>
+    </androidx.cardview.widget.CardView>
+
+    <EditText
+        android:id="@+id/loanReason"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:autofillHints="no"
+        android:fontFamily="@font/font_regular"
+        android:hint="@string/loan_reason"
+        android:inputType="text"
+        android:textColor="@color/black"
+        android:textColorHint="@color/web_green"
+        android:textSize="16sp" />
+
+    <Button
+        android:id="@+id/proceed"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:background="@drawable/bg_button"
+        android:fontFamily="@font/font_bold"
+        android:text="@string/proceed"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/phoneNo" />
+
+</LinearLayout>
